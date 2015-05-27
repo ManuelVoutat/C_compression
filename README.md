@@ -1,3 +1,3 @@
 # C_compression
 Projet de C 2014/2015 sur la compression de fichier
-VOUTAT LECHEVALLIER Lucidarme
+VOUTAT LECHEVALLIER Lucidarme s6mon
