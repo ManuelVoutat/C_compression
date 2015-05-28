@@ -20,7 +20,7 @@ typedef noeud * dictionnaire;
 
 void init_dico(dictionnaire dico);
 
-void ajout_dico(char * sequence, valeur_t valeur, dictionnaire dico, int code_sequence);
+void ajout_dico(char * sequence, dictionnaire dico, int code_sequence);
 
 valeur_t recherche_dico(char * sequence, dictionnaire dico);
 
