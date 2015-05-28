@@ -7,15 +7,10 @@
 //Ouvrir/Fermer fichier
 FILE* fichier = NULL;
 
-int openFile ()
+int openFile (char* name)
 {
-	char* name;
-
-
-
-	printf("Quel fichier binaire voulez vous compresser ?\n");
-	scanf ("%s", name);
-	fichier = fopen (name, "rb");
+	
+	fichier = fopen (name, "rb"); // "rb" correspond à "read binary"
 
 	if(NULL == fichier) //On part sur un fichier binaire
 	{
@@ -46,19 +41,16 @@ int closeFile ()
 int readChar () //On lit un octet (8bit) que l'on convertit en décimal
 {
 	int caractere;
-	int i,decimal;
+	int i,decimal=0;
 
-	for(i=0; i<8; i++)
-	{
-		caractere = fgetc(fichier);
-		if (caractere == EOF)			//Dans le cas ou on est à EOF,nus retournons 256
-			return 256;
-		decimal = caractere * 2^(7-i) + decimal;
-
+	caractere = fgetc(fichier);
+	if (caractere == EOF){	//Dans le cas ou on est à EOF,nus retournons 256
+		return 256;
 	}
 
-	return decimal;
+	return caractere;
 }
+
 
 
 
