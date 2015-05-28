@@ -124,10 +124,10 @@ int recherche_dico(char *sequence, dictionnaire dico){
 int main(){
 	dictionnaire dico= malloc(sizeof(dictionnaire));
 	init_dico(dico);
-	affichage(dico);
+	afficher(dico);
 
 	char * string = "d";
 	ajout_dico(string , dico, 460);
-	affichage(dico);
+	afficher(dico);
 	return 0;
 }
