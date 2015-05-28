@@ -41,7 +41,7 @@ int recherche_frere(dictionnaire * current, char seq){
 				}
 			}
 			else{
-				printf("Le caractere n°%d\n est présent\n", (*(*current)).caractere);
+				//printf("Le caractere n°%d\n est présent\n", (*(*current)).caractere);
 				return  1;
 			}
 		}
@@ -59,22 +59,17 @@ void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 	int i=0;
 	//tant que la sequence de caractère n'est pas finis
 	while(sequence[i] != '\0'){
-		printf("charactère %c\n",sequence[i] );
 		//on avance à la lettre voulue chez les freres
-
 		int resultat_de_recherche = recherche_frere(&current, sequence[i]);
 		//si le frere n'est pas présent
 		if(resultat_de_recherche != 1){
-			printf("%d\n", resultat_de_recherche);
 			//branche de frere vide
 			if(resultat_de_recherche == -1){
-				printf("%s\n","********************************************************" );
 				current = malloc(sizeof(noeud));
 				(*pere).fils = current;
 			}
 			//branche totalement parcourue et ne contient pas le caratere
 			else if(resultat_de_recherche == 0){
-				printf("%s\n","blabla" );
 				(*current).frere = malloc(sizeof(noeud));
 				current = (*current).frere;
 			}
@@ -85,7 +80,6 @@ void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 			(*current).pere = NULL;
 		}
 		else{
-			printf("valeur de caractère de current :%d\n",(*current).caractere );
 			pere = current;
 			current = (*current).fils;
 		}
