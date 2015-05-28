@@ -24,7 +24,7 @@ int char_to_hexa(char c);
 
 void init_dico(dictionnaire dico);
 
-int recherche_frere(dictionnaire branche, char seq);
+int recherche_frere(dictionnaire * current, char seq);
 
 void ajout_dico(char * sequence, dictionnaire dico, int code_sequence);
 

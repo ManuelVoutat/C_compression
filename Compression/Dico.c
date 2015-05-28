@@ -30,9 +30,15 @@ void init_dico(dictionnaire dico){
 int recherche_frere(dictionnaire * current, char seq){
 
 	if((*current) != NULL){
-		while((*(*current)).frere != NULL){
+		while((*current) != NULL){
+			printf("current caractère : %d\n", (*(*current)).caractere);
 			if(seq != (*(*current)).caractere){
-				(*current) = (*(*current)).frere;
+				if((*(*current)).frere != NULL){
+					(*current) = (*(*current)).frere;
+				}
+				else{
+					return 0;
+				}
 			}
 			else{
 				printf("Le caractere n°%d\n est présent\n", (*(*current)).caractere);
@@ -48,35 +54,39 @@ int recherche_frere(dictionnaire * current, char seq){
 
 void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 	noeud * current = dico;
-
+	noeud * pere = current;
 
 	int i=0;
 	//tant que la sequence de caractère n'est pas finis
 	while(sequence[i] != '\0'){
 		printf("charactère %c\n",sequence[i] );
 		//on avance à la lettre voulue chez les freres
+
 		int resultat_de_recherche = recherche_frere(&current, sequence[i]);
 		//si le frere n'est pas présent
 		if(resultat_de_recherche != 1){
 			printf("%d\n", resultat_de_recherche);
 			//branche de frere vide
 			if(resultat_de_recherche == -1){
+				printf("%s\n","********************************************************" );
 				current = malloc(sizeof(noeud));
+				(*pere).fils = current;
 			}
 			//branche totalement parcourue et ne contient pas le caratere
 			else if(resultat_de_recherche == 0){
-				printf("apres :%d\n",(*current).caractere );
+				printf("%s\n","blabla" );
 				(*current).frere = malloc(sizeof(noeud));
 				current = (*current).frere;
 			}
 			(*current).valeur = code_sequence;
-			(*current).caractere = char_to_hexa(sequence[i]);
+			(*current).caractere = char_to_int(sequence[i]);
 			(*current).frere = NULL;
 			(*current).fils = NULL;
 			(*current).pere = NULL;
 		}
 		else{
 			printf("valeur de caractère de current :%d\n",(*current).caractere );
+			pere = current;
 			current = (*current).fils;
 		}
 		i++;
@@ -107,7 +117,7 @@ valeur_t caract_to_code (char *sequence, dictionnaire dico){
 
 void afficher(dictionnaire dico){
 	dictionnaire tmp_frere, tmp_fils;
-	int fils;
+	int frere;
 	
 	tmp_frere = dico;
 	tmp_fils = dico;
@@ -120,10 +130,11 @@ void afficher(dictionnaire dico){
 		tmp_frere = tmp_frere -> frere;
 	}
 	
-	printf("\nnumero du fils (ascii, 1ere coordonnée) : \n");
-	scanf("%d",&fils);
-	while(tmp_fils -> valeur != fils){
+	printf("\nnumero du frere dont on veux les fils (ascii, 1ere coordonnée) : \n");
+	scanf("%d",&frere);
+	while(tmp_fils -> valeur != frere){
 		tmp_fils = tmp_fils -> frere;
+		printf("%d\n",tmp_fils -> valeur );
 		if(tmp_fils == NULL){
 			printf("Ce frere n'existe pas \n");
 			return;
@@ -170,4 +181,28 @@ int est_dans_dico(char *sequence, dictionnaire dico){
 		parse(&sequence);
 		return est_dans_dico(sequence,temp -> fils);
 	}		
+}
+
+int main(){
+	dictionnaire dico= malloc(sizeof(noeud));
+	init_dico(dico);
+	
+	printf("%s\n","---------------------------------------------" );
+	char * string = "Z";
+	ajout_dico(string , dico, 56);
+
+	printf("%s\n","---------------------------------------------" );
+	string = "AZ";
+	ajout_dico(string , dico, 6);
+
+	printf("%s\n","---------------------------------------------" );
+	string = "AZB";
+	ajout_dico(string , dico, 16);
+	
+	printf("%s\n","---------------------------------------------" );
+	string = "AP";
+	ajout_dico(string , dico, 26);
+
+	afficher(dico);
+	return 0;
 }
