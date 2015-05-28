@@ -27,6 +27,61 @@ void init_dico(dictionnaire dico){
 
 }
 
+int recherche_frere(dictionnaire * current, char seq){
+
+	if((*current) != NULL){
+		while((*(*current)).frere != NULL){
+			if(seq != (*(*current)).caractere){
+				(*current) = (*(*current)).frere;
+			}
+			else{
+				printf("Le caractere n°%d\n est présent\n", (*(*current)).caractere);
+				return  1;
+			}
+		}
+		return 0;
+	}
+	else{
+		return -1;
+	}
+}
+
+void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
+	noeud * current = dico;
+
+
+	int i=0;
+	//tant que la sequence de caractère n'est pas finis
+	while(sequence[i] != '\0'){
+		printf("charactère %c\n",sequence[i] );
+		//on avance à la lettre voulue chez les freres
+		int resultat_de_recherche = recherche_frere(&current, sequence[i]);
+		//si le frere n'est pas présent
+		if(resultat_de_recherche != 1){
+			printf("%d\n", resultat_de_recherche);
+			//branche de frere vide
+			if(resultat_de_recherche == -1){
+				current = malloc(sizeof(noeud));
+			}
+			//branche totalement parcourue et ne contient pas le caratere
+			else if(resultat_de_recherche == 0){
+				printf("apres :%d\n",(*current).caractere );
+				(*current).frere = malloc(sizeof(noeud));
+				current = (*current).frere;
+			}
+			(*current).valeur = code_sequence;
+			(*current).caractere = char_to_hexa(sequence[i]);
+			(*current).frere = NULL;
+			(*current).fils = NULL;
+			(*current).pere = NULL;
+		}
+		else{
+			printf("valeur de caractère de current :%d\n",(*current).caractere );
+			current = (*current).fils;
+		}
+		i++;
+	}
+}
 
 //a vérifier que le code appartient au dico
 valeur_t caract_to_code (char *sequence, dictionnaire dico){
@@ -47,27 +102,6 @@ valeur_t caract_to_code (char *sequence, dictionnaire dico){
 		parse(&sequence);
 		return caract_to_code(sequence, temp -> fils);
 	}
-}
-
-int recherche_frere(dictionnaire branche, char seq){
-	noeud * current = branche;
-	printf("%s\n","****************" );
-	if(current != NULL){
-		printf("%d\n", (*current).caractere);
-		if(seq != (*current).caractere){
-			if((*current).frere != NULL){
-				recherche_frere((*current).frere, seq);
-			}
-			else{
-				return 0;
-			}
-		}
-		else{
-			printf("Le caractere n°%d\n est présent", (*current).caractere);
-			return 1;
-		}
-	}
-	return 0;
 }
 
 
