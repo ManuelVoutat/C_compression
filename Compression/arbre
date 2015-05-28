@@ -1,0 +1,46 @@
+dico = malloc(sizeof(noeud));
+dico -> pere = NULL;
+dico -> valeur = 97; //a
+dico -> caractere = 97;
+
+dico -> frere = malloc(sizeof(noeud));
+dico -> frere -> valeur = 98; //b
+dico -> frere -> caractere = 98;
+dico -> frere -> fils = NULL;
+
+dico -> frere -> frere = malloc(sizeof(noeud));
+dico -> frere -> frere -> valeur = 99; //c
+dico -> frere -> frere -> caractere = 99;
+dico -> frere -> frere -> frere = NULL;
+
+dico -> fils = malloc(sizeof(noeud));
+dico -> fils -> valeur = 258; //n
+dico -> fils -> caractere = 110;
+
+dico -> fils -> frere = malloc(sizeof(noeud));
+dico -> fils -> frere -> valeur = 259; //d
+dico -> fils -> frere -> caractere = 100;
+dico -> fils -> frere -> frere = NULL;
+
+dico -> frere -> frere -> fils = malloc(sizeof(noeud));
+dico -> frere -> frere -> fils -> valeur = 260; //h
+dico -> frere -> frere -> fils -> caractere = 104;
+dico -> frere -> frere -> fils -> frere = NULL;
+dico -> frere -> frere -> fils -> fils = NULL;
+
+dico -> fils -> fils = malloc(sizeof(noeud));
+dico -> fils -> fils -> valeur = 261; //e
+dico -> fils -> fils -> caractere = 101;
+dico -> fils -> fils -> fils = NULL;
+
+dico -> fils -> fils -> frere = malloc(sizeof(noeud));
+dico -> fils -> fils -> frere -> valeur = 262; //a
+dico -> fils -> fils -> frere -> caractere = 97;
+dico -> fils -> fils -> frere -> frere = NULL;
+dico -> fils -> fils -> frere -> fils = NULL;
+
+dico -> fils -> frere -> fils = malloc(sizeof(noeud));
+dico -> fils -> frere -> fils -> valeur = 263; //i
+dico -> fils -> frere -> fils -> caractere = 105;
+dico -> fils -> frere -> fils -> frere = NULL;
+dico -> fils -> frere -> fils -> fils = NULL;
