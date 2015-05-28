@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdint.h>
 
-typedef uint64_t valeur_t; //valeur attribuée (binaire)
+typedef int valeur_t; //valeur attribuée (binaire)
 
-typedef short int caractere_t; //valeur caractère (ASCII)
+typedef int caractere_t; //valeur caractère (ASCII)
 
 typedef struct _noeud noeud;
 struct _noeud {
@@ -13,18 +13,25 @@ struct _noeud {
 	caractere_t caractere;
 	struct _noeud *frere;
 	struct _noeud *fils;
+	struct _noeud *pere;
 };
 
 typedef noeud * dictionnaire;
 
+char int_to_char(int n);
+
+int char_to_hexa(char c);
+
 void init_dico(dictionnaire dico);
+
+int recherche_frere(dictionnaire branche, char seq);
 
 void ajout_dico(char * sequence, dictionnaire dico, int code_sequence);
 
-int recherche_dico(char * sequence, dictionnaire dico);
+int est_dans_dico(char * sequence, dictionnaire dico);
 
 void parse(char **seq);
 
-char hexa_to_char(uint64_t n);
+valeur_t caract_to_code (char *sequence, dictionnaire dico);
 
 void afficher(dictionnaire dico);

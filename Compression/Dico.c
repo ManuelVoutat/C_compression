@@ -2,79 +2,96 @@
 #include <stdlib.h>
 #include "Dico.h"
 
-char hexa_to_char(uint64_t n){return n;}
+char int_to_char(int n){return n;}
 
-uint64_t char_to_hexa(char c){return c;}
+int char_to_int(char c){return c;}
 
 void init_dico(dictionnaire dico){
 	noeud * current = dico;
 
+	int N=74;
 	int i;
-	for(i=0; i<100 ; i++){
+	for(i=60; i < N ; i++){
 		(*current).valeur = i;
 		(*current).caractere = i;
-		(*current).frere = malloc(sizeof(current));
+		(*current).frere = malloc(sizeof(noeud));
 		(*current).fils = NULL;
+		(*current).pere = NULL;
 		current = (*current).frere;
 	}
+	(*current).valeur = N;
+	(*current).caractere = N;
 	(*current).frere = NULL;
+	(*current).fils = NULL;
+	(*current).pere = NULL;
 
 }
-					// ab
-void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
-	noeud * current = dico;
 
-	int i=0;
-	//tant que la sequence de caractère n'est pas finis
-	while(sequence[i] != '\0'){
-		//on avance à la lettre voulue chez les freres
-		
-		while((current != NULL) && ((*current).frere != NULL)){
-			if(sequence[i] != (*current).caractere){
-				current = (*current).frere;
-			}
-			else{
-				printf("%d\n", (*current).caractere);
-				break;
-			}
-		}
-		//Normalement on rentre dans cette condition que lorsque l'on est sur le dernier caractere du mot
-		//Ce cas correspond au moment où le frere n'existe pas et où il faut donc le créer
-		if(current == NULL){
-			current = malloc(sizeof(current));
-			(*current).valeur = code_sequence;
-			(*current).caractere = i;
-			(*current).frere = NULL;
-			(*current).fils = NULL;
-			//on pourrais mettre un break pour être sûr que ça fonctionne
-		}
-		printf("%d\n", i);
-		current = (*current).fils;
-		i++;
+
+//a vérifier que le code appartient au dico
+valeur_t caract_to_code (char *sequence, dictionnaire dico){
+	int N,x;
+	dictionnaire temp;
+	
+	temp = dico;
+	N = strlen(sequence);
+	x = char_to_int(*sequence);
+	
+	while( x != temp -> caractere){
+		temp = temp -> frere;
+	}
+	
+	if (N==1){
+		return temp -> valeur;
+	}else{
+		parse(&sequence);
+		return caract_to_code(sequence, temp -> fils);
 	}
 }
+
+int recherche_frere(dictionnaire branche, char seq){
+	noeud * current = branche;
+	printf("%s\n","****************" );
+	if(current != NULL){
+		printf("%d\n", (*current).caractere);
+		if(seq != (*current).caractere){
+			if((*current).frere != NULL){
+				recherche_frere((*current).frere, seq);
+			}
+			else{
+				return 0;
+			}
+		}
+		else{
+			printf("Le caractere n°%d\n est présent", (*current).caractere);
+			return 1;
+		}
+	}
+	return 0;
+}
+
 
 void afficher(dictionnaire dico){
 	dictionnaire tmp_frere, tmp_fils;
-	short int frere;
+	int fils;
 	
 	tmp_frere = dico;
 	tmp_fils = dico;
 	if(tmp_frere == NULL){
-		printf("il n'y a pas de fists! \n");
+		printf("il n'y a pas de fils \n");
 		return;
 	}
 	while(tmp_frere != NULL){
-		printf("(%jx;%c;%d) ", tmp_frere -> valeur, hexa_to_char(tmp_frere -> valeur), tmp_frere -> caractere);
+		printf("(%d;%c;%d) ", tmp_frere -> valeur, int_to_char(tmp_frere -> caractere), tmp_frere -> caractere);
 		tmp_frere = tmp_frere -> frere;
 	}
 	
-	printf("\nnumero du fils (ascii, 2ième coordonnée) : \n");
-	scanf("%hd",&frere);
-	while(tmp_fils -> caractere != frere){
+	printf("\nnumero du fils (ascii, 1ere coordonnée) : \n");
+	scanf("%d",&fils);
+	while(tmp_fils -> valeur != fils){
 		tmp_fils = tmp_fils -> frere;
 		if(tmp_fils == NULL){
-			printf("Ce fist n'existe pas. Gros nul, tu n'a qu'à relancer la fistinière. \n");
+			printf("Ce frere n'existe pas \n");
 			return;
 		}	
 	}
@@ -95,39 +112,28 @@ void parse(char **seq){
 	*seq = seqf; 
 }
 
-int recherche_dico(char *sequence, dictionnaire dico){
+int est_dans_dico(char *sequence, dictionnaire dico){
 	dictionnaire temp;
 	temp = dico;
 	
-	uint64_t x; 
-	x = char_to_hexa(*sequence);
+	int x; 
+	x = char_to_int(*sequence);
 	
 	int n;
 	n = strlen(sequence);
 	
 	//si le dico est vide
-	if(temp == NULL){return -1;}
+	if(temp == NULL){return 0;}
 	
 	//on regarde les frères
 	while(x != temp -> valeur){
 		temp = temp -> frere;
-		if(temp == NULL){return -1;}
+		if(temp == NULL){return 0;}
 	}
 	
 	if(n == 1){return 1;}
 	else {
 		parse(&sequence);
-		return recherche_dico(sequence,temp -> fils);
+		return est_dans_dico(sequence,temp -> fils);
 	}		
-}
-
-int main(){
-	dictionnaire dico= malloc(sizeof(dictionnaire));
-	init_dico(dico);
-	affichage(dico);
-
-	char * string = "d";
-	ajout_dico(string , dico, 460);
-	affichage(dico);
-	return 0;
 }
