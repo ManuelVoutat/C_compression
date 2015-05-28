@@ -2,15 +2,9 @@
 #include <stdlib.h>
 #include "Dico.h"
 
-uint8_t char_to_num(char lettre){
-	return lettre + 1;
-}
+char hexa_to_char(uint64_t n){return n;}
 
-char num_to_char(int nbr){
-        return nbr -1;
-}
-
-
+uint64_t char_to_hexa(char c){return c;}
 
 void init_dico(dictionnaire dico){
 	noeud * current = dico;
@@ -60,19 +54,72 @@ void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 	}
 }
 
-void affichage(dictionnaire dico){
-	noeud * current = dico;
-
-	while((current != NULL)){
-		printf("%c;", num_to_char((*current).caractere));
-		current = (*current).frere;
+void afficher(dictionnaire dico){
+	dictionnaire tmp_frere, tmp_fils;
+	short int frere;
+	
+	tmp_frere = dico;
+	tmp_fils = dico;
+	if(tmp_frere == NULL){
+		printf("il n'y a pas de fists! \n");
+		return;
 	}
-	printf("\n");
-
+	while(tmp_frere != NULL){
+		printf("(%jx;%c;%d) ", tmp_frere -> valeur, hexa_to_char(tmp_frere -> valeur), tmp_frere -> caractere);
+		tmp_frere = tmp_frere -> frere;
+	}
+	
+	printf("\nnumero du fils (ascii, 2ième coordonnée) : \n");
+	scanf("%hd",&frere);
+	while(tmp_fils -> caractere != frere){
+		tmp_fils = tmp_fils -> frere;
+		if(tmp_fils == NULL){
+			printf("Ce fist n'existe pas. Gros nul, tu n'a qu'à relancer la fistinière. \n");
+			return;
+		}	
+	}
+	
+	afficher(tmp_fils -> fils);
 }
 
+void parse(char **seq){
+	char *seqf;
+	seqf = malloc(sizeof(*seq));
+	
+	int n,i;
+	n = strlen(*seq);
 
+	for(i=0;i<n;i++){	
+		*(seqf+i) = *(*seq+i+1);
+	}
+	*seq = seqf; 
+}
 
+int recherche_dico(char *sequence, dictionnaire dico){
+	dictionnaire temp;
+	temp = dico;
+	
+	uint64_t x; 
+	x = char_to_hexa(*sequence);
+	
+	int n;
+	n = strlen(sequence);
+	
+	//si le dico est vide
+	if(temp == NULL){return -1;}
+	
+	//on regarde les frères
+	while(x != temp -> valeur){
+		temp = temp -> frere;
+		if(temp == NULL){return -1;}
+	}
+	
+	if(n == 1){return 1;}
+	else {
+		parse(&sequence);
+		return recherche_dico(sequence,temp -> fils);
+	}		
+}
 
 int main(){
 	dictionnaire dico= malloc(sizeof(dictionnaire));
