@@ -7,7 +7,7 @@
 //Ouvrir/Fermer fichier
 FILE* fichier = NULL;
 
-int openFile (char* name)
+FILE* openFile (char* name)
 {
 	
 	fichier = fopen (name, "rb"); // "rb" correspond à "read binary"
@@ -15,19 +15,19 @@ int openFile (char* name)
 	if(NULL == fichier) //On part sur un fichier binaire
 	{
 		printf("Erreur on ne peut pas l'ouvrir\n");
-		return 0;
+		return fichier;
 	}
 	else
-		return 1;
+		return fichier;
 }
 
-int closeFile ()
+int closeFile (FILE* fichier)
 {
 	int succes = 0;
 
 	succes = fclose (fichier);
 
-	if(succes == 0)
+	if(succes != 0)
 	{
 		printf("Le fichier n'est pas fermé correctement\n");
 		return 0;
@@ -38,7 +38,7 @@ int closeFile ()
 
 //Lire et passer char 
 
-int readChar () //On lit un octet (8bit) que l'on convertit en décimal
+int readChar (FILE* fichier) //On lit un octet (8bit) que l'on convertit en décimal
 {
 	int caractere;
 	int i,decimal=0;
@@ -50,6 +50,9 @@ int readChar () //On lit un octet (8bit) que l'on convertit en décimal
 
 	return caractere;
 }
+
+
+
 
 
 

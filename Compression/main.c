@@ -1,24 +1,14 @@
 #include "Entree_Sortie.h"
+#include "Compression.h"
 
 int main (int argc, char *argv[]){ // argc permet de connaitre le nombre d'argument apporté après ./main. Si argc=1 alors il n'y a pas d'argument
-	int open = openFile(argv[1]);
-	int caractere_lu = 0; 
+	FILE* fichier_a_compresser = openFile(argv[1]);
+
 	
-	while(caractere_lu != 256){ // car 256 correspond à EOF
-		caractere_lu = readChar();
-		printf("%d\n", caractere_lu);
-		/*
-		
-		COMPRESSION();
-		
-		DECOMPRESSION();
-		
-		
-		
-		*/
-	}
+	ecriture_sortie(0, fichier_a_compresser);
 	
-	int close = closeFile();
+	int close = closeFile(fichier_a_compresser);
+
 	
 	
 }
