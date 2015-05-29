@@ -87,7 +87,7 @@ void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 	}
 }
 
-//a vérifier que le code appartient au dico
+//a vérifier si la chaine de caractere est présente
 valeur_t caract_to_code (char *sequence, dictionnaire dico){
 	int N,x;
 	dictionnaire temp;
@@ -175,28 +175,4 @@ int est_dans_dico(char *sequence, dictionnaire dico){
 		parse(&sequence);
 		return est_dans_dico(sequence,temp -> fils);
 	}		
-}
-
-int main(){
-	dictionnaire dico= malloc(sizeof(noeud));
-	init_dico(dico);
-	
-	printf("%s\n","---------------------------------------------" );
-	char * string = "Z";
-	ajout_dico(string , dico, 56);
-
-	printf("%s\n","---------------------------------------------" );
-	string = "AZ";
-	ajout_dico(string , dico, 6);
-
-	printf("%s\n","---------------------------------------------" );
-	string = "AZB";
-	ajout_dico(string , dico, 16);
-	
-	printf("%s\n","---------------------------------------------" );
-	string = "AP";
-	ajout_dico(string , dico, 26);
-
-	afficher(dico);
-	return 0;
 }
