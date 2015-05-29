@@ -160,3 +160,35 @@ int est_dans_dico(char *sequence, int N, dictionnaire dico){
 	}
 	return 1;	
 }
+
+
+int main(){
+	/*int i=7;
+	char *tab=malloc(sizeof(char)*i);
+	printf("%d\n",(int)sizeof(char) );
+	//char *str= malloc(20);
+	//char** temp_tab;
+	//str = "A";//"TRAlalala\0";
+	tab[0] = 'A';
+	tab[1] = 'B';
+	tab[2] = 'C';
+	tab[3] = 'D';
+	tab[4] = 'E';
+	tab[5] = 'F';
+	tab[6] = 'G';//str;
+	//temp_tab=realloc(tab,4*2*i);
+	//tab = temp_tab;
+	int j=0;
+	for(j=0; j<7;j++){
+		printf("%c \n", tab[j]);
+	}*/
+	dictionnaire dico=malloc(sizeof(dictionnaire));
+	init_dico(dico);
+	ajout_dico("AN",2,dico,58);
+	ajout_dico("ANN",3,dico,58);
+	ajout_dico("ANNA",4,dico,58);
+	afficher(dico);
+	return 0;
+}
+
+
