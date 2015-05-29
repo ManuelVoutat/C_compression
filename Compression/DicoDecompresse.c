@@ -39,6 +39,25 @@ int main(){
 	return 0;
 }
 
+int est_dans_tab(char *tab[N], int N, char *val){
+	int trouve = 0;
+	int i = 0;
+	
+	if(strlen(val) > 2){
+		i = 255;
+	} 
+	
+	while(i<N){
+		if(tab[i] == val){
+			return 1;
+		}else{
+			i++;
+		}
+		return -1;
+	} 
+}
+
+  
 /*
 int main (int argc, char *argv[])
 {
