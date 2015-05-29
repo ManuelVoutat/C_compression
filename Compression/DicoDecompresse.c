@@ -7,12 +7,31 @@ char int_to_char(int n){return n;}
 
 int char_to_int(char c){return c;}
 
-void init_dicodecompress ( char*tab[N]){
+void init_dicodecompress (char*tab[N]){
 	int i;
 	for(i=0;i<255;i++){
 		*tab[i]= int_to_char(i);}
 }
 
+int est_dans_tab(char *tab[N], int N, char *val){
+	int trouve = 0;
+	int i = 0;
+	
+	if(strlen(val) > 2){
+		i = 255;
+	} 
+	
+	while(i<N){
+		if(tab[i] == val){
+			return 1;
+		}else{
+			i++;
+		}
+		return -1;
+	} 
+}
+
+  
 /*
 int main (int argc, char *argv[])
 {
