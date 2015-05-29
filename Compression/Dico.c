@@ -31,7 +31,7 @@ int recherche_frere(dictionnaire * current, char seq){
 
 	if((*current) != NULL){
 		while((*current) != NULL){
-			printf("current caractère : %d\n", (*(*current)).caractere);
+			//printf("current caractère : %d\n", (*(*current)).caractere);
 			if(seq != (*(*current)).caractere){
 				if((*(*current)).frere != NULL){
 					(*current) = (*(*current)).frere;
@@ -89,22 +89,29 @@ void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 
 //a vérifier si la chaine de caractere est présente
 valeur_t caract_to_code (char *sequence, dictionnaire dico){
-	int N,x;
-	dictionnaire temp;
-	
-	temp = dico;
-	N = strlen(sequence);
-	x = char_to_int(*sequence);
-	
-	while( x != temp -> caractere){
-		temp = temp -> frere;
-	}
-	
-	if (N==1){
-		return temp -> valeur;
+	noeud * current = dico;
+
+	if(est_dans_dico(sequence, current)){
+		int i=0;
+		//tant que la sequence de caractère n'est pas finis
+		while(sequence[i] != '\0'){
+			//on avance à la lettre voulue chez les freres
+			int resultat_de_recherche = recherche_frere(&current, sequence[i]);
+			//si le frere n'est pas présent
+			if(resultat_de_recherche != 1){
+				fprintf(stderr, "La sequence n'est pas presente dans le dictionnaire" );
+			}
+			else{
+				i++;
+				if(sequence[i] != '\0'){
+					current = (*current).fils;
+				}
+			}
+		}
+		return (*current).valeur;
 	}else{
-		parse(&sequence);
-		return caract_to_code(sequence, temp -> fils);
+		fprintf(stderr, "La sequence n'est pas presente dans le dictionnaire" );
+		return -1;
 	}
 }
 
@@ -138,18 +145,6 @@ void afficher(dictionnaire dico){
 	afficher(tmp_fils -> fils);
 }
 
-void parse(char **seq){
-	char *seqf;
-	seqf = malloc(sizeof(*seq));
-	
-	int n,i;
-	n = strlen(*seq);
-
-	for(i=0;i<n;i++){	
-		*(seqf+i) = *(*seq+i+1);
-	}
-	*seq = seqf; 
-}
 
 int est_dans_dico(char *sequence, dictionnaire dico){
 	noeud * current = dico;
@@ -171,3 +166,17 @@ int est_dans_dico(char *sequence, dictionnaire dico){
 	return 1;	
 }
 
+int main(){
+	dictionnaire dico = malloc(sizeof(dictionnaire));
+	init_dico(dico);
+
+	ajout_dico("AZ", dico, 44);
+	printf("A   0-> NON , 1 -> OUI %d\n", est_dans_dico("A",dico));
+	printf("AZ  0-> NON , 1 -> OUI %d\n", est_dans_dico("AZ",dico));
+	printf("AZA 0-> NON , 1 -> OUI %d\n", est_dans_dico("AZA",dico));
+	printf("%d\n", caract_to_code("A",dico));
+	printf("%d\n", caract_to_code("AZ",dico));
+	printf("%d\n", caract_to_code("AZA",dico));
+	afficher(dico);
+	return 0;
+}

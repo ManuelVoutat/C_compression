@@ -33,9 +33,6 @@ int char_to_hexa(char c);
 /*initialise le dictionnaire, met les 255 caracteres de la table ASCII en frere. La valeur attribuée est egale à la valeur du caractere*/
 void init_dico(dictionnaire dico);
 
-/*prend une chaine de caractere en argument et modifie la chaine de tel sorte que la chaine est la même sans le premier caractere*/
-void parse(char **seq);
-
 /*renvoie la valeur ou le code que l'on a attribué a une chaine de caractere pris en argurment d'après le dictionnaire
 attention : vérifier si la chaine existe avant utilisation de la fonction (sinon core dumped)
 */
