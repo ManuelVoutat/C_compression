@@ -16,15 +16,12 @@ void init_dico(dictionnaire dico){
 		(*current).caractere = i;
 		(*current).frere = malloc(sizeof(noeud));
 		(*current).fils = NULL;
-		(*current).pere = NULL;
 		current = (*current).frere;
 	}
 	(*current).valeur = N;
 	(*current).caractere = N;
 	(*current).frere = NULL;
 	(*current).fils = NULL;
-	(*current).pere = NULL;
-
 }
 
 int recherche_frere(dictionnaire * current, char seq){
@@ -77,7 +74,6 @@ void ajout_dico(char * sequence, dictionnaire dico, int code_sequence){
 			(*current).caractere = char_to_int(sequence[i]);
 			(*current).frere = NULL;
 			(*current).fils = NULL;
-			(*current).pere = NULL;
 		}
 		else{
 			pere = current;
@@ -135,7 +131,6 @@ void afficher(dictionnaire dico){
 	scanf("%d",&frere);
 	while(tmp_fils -> valeur != frere){
 		tmp_fils = tmp_fils -> frere;
-		printf("%d\n",tmp_fils -> valeur );
 		if(tmp_fils == NULL){
 			printf("Ce frere n'existe pas \n");
 			return;

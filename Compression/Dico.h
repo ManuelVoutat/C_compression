@@ -19,7 +19,6 @@ struct _noeud {
 	caractere_t caractere;
 	struct _noeud *frere;
 	struct _noeud *fils;
-	struct _noeud *pere;
 };
 
 typedef noeud * dictionnaire;
