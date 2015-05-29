@@ -152,27 +152,22 @@ void parse(char **seq){
 }
 
 int est_dans_dico(char *sequence, dictionnaire dico){
-	dictionnaire temp;
-	temp = dico;
-	
-	int x; 
-	x = char_to_int(*sequence);
-	
-	int n;
-	n = strlen(sequence);
-	
-	//si le dico est vide
-	if(temp == NULL){return 0;}
-	
-	//on regarde les frères
-	while(x != temp -> valeur){
-		temp = temp -> frere;
-		if(temp == NULL){return 0;}
+	noeud * current = dico;
+
+	int i=0;
+	//tant que la sequence de caractère n'est pas finis
+	while(sequence[i] != '\0'){
+		//on avance à la lettre voulue chez les freres
+		int resultat_de_recherche = recherche_frere(&current, sequence[i]);
+		//si le frere n'est pas présent
+		if(resultat_de_recherche != 1){
+			return 0;
+		}
+		else{
+			current = (*current).fils;
+		}
+		i++;
 	}
-	
-	if(n == 1){return 1;}
-	else {
-		parse(&sequence);
-		return est_dans_dico(sequence,temp -> fils);
-	}		
+	return 1;	
 }
+
