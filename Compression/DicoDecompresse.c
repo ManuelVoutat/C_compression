@@ -1,16 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define N 512
+#include "DicoDecompresse.h"
 
 char int_to_char(int n){return n;}
 
 int char_to_int(char c){return c;}
 
-void init_dicodecompress ( char*tab[N]){
+void init_dicodecompress (char * tab){
 	int i;
-	for(i=0;i<255;i++){
-		*tab[i]= int_to_char(i);}
+	for(i=0;i<N;i++){
+		if(i<255){
+			tab[i] = int_to_char(i);
+		}else{
+			tab[i] = ' ';
+		}
+	}
+}
+
+void affichage_dicodecompress(char * tab){
+	int i;
+	for (i = 0; i<N; i++){
+		printf("%d ",i);
+		printf("%c;", tab[i]);
+	}
+}
+
+void ajout_dicodecompress(){
+
+
+
+}
+
+int main(){
+	char tab[N];
+	init_dicodecompress(tab);
+	affichage_dicodecompress(tab);
+	return 0;
 }
 
 /*
