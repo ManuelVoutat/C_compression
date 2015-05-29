@@ -35,16 +35,16 @@ void init_dico(dictionnaire dico);
 /*renvoie la valeur ou le code que l'on a attribué a une chaine de caractere pris en argurment d'après le dictionnaire
 attention : vérifier si la chaine existe avant utilisation de la fonction (sinon core dumped)
 */
-valeur_t caract_to_code (char *sequence, int N, dictionnaire dico);
+valeur_t caract_to_code (char *sequence, int taille_seq, dictionnaire dico);
 
 /*renvoie 1 si la chaine de caractere est présente dans le dico sinon 0*/
-int est_dans_dico(char * sequence, int N, dictionnaire dico);
+int est_dans_dico(char * sequence, int taille_seq, dictionnaire dico);
 
 /*dans une ligne de frere, recherche si le caractere pris en argument est present ou pas*/
 int recherche_frere(dictionnaire * current, char seq);
 
 /*ajoute une chaine de caractere pris en argument dans le dictionnaire*/
-void ajout_dico(char * sequence, int N, dictionnaire dico, int code_sequence);
+void ajout_dico(char * sequence, int taille_seq, dictionnaire dico, int code_sequence);
 
 /*affiche dictionnaire*/
 void afficher(dictionnaire dico);
