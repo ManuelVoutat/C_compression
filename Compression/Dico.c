@@ -9,17 +9,17 @@ int char_to_int(char c){return c;}
 void init_dico(dictionnaire dico){
 	noeud * current = dico;
 
-	int N=74;
+	int N=255;
 	int i;
-	for(i=60; i < N ; i++){
+	for(i=0; i < N ; i++){
 		(*current).valeur = i;
-		(*current).caractere = i;
+		(*current).ASCII = i;
 		(*current).frere = malloc(sizeof(noeud));
 		(*current).fils = NULL;
 		current = (*current).frere;
 	}
 	(*current).valeur = N;
-	(*current).caractere = N;
+	(*current).ASCII = N;
 	(*current).frere = NULL;
 	(*current).fils = NULL;
 }
@@ -29,7 +29,7 @@ int recherche_frere(dictionnaire * current, char seq){
 	if((*current) != NULL){
 		while((*current) != NULL){
 			//printf("current caractère : %d\n", (*(*current)).caractere);
-			if(seq != (*(*current)).caractere){
+			if(seq != (*(*current)).ASCII){
 				if((*(*current)).frere != NULL){
 					(*current) = (*(*current)).frere;
 				}
@@ -71,7 +71,7 @@ void ajout_dico(char * sequence, int N, dictionnaire dico, int code_sequence){
 				current = (*current).frere;
 			}
 			(*current).valeur = code_sequence;
-			(*current).caractere = char_to_int(sequence[i]);
+			(*current).ASCII = char_to_int(sequence[i]);
 			(*current).frere = NULL;
 			(*current).fils = NULL;
 		}
@@ -123,7 +123,7 @@ void afficher(dictionnaire dico){
 		return;
 	}
 	while(tmp_frere != NULL){
-		printf("(%d;%c;%d) ", tmp_frere -> valeur, int_to_char(tmp_frere -> caractere), tmp_frere -> caractere);
+		printf("(%d;%c;%d) ", tmp_frere -> valeur, int_to_char(tmp_frere -> ASCII), tmp_frere -> ASCII);
 		tmp_frere = tmp_frere -> frere;
 	}
 	
@@ -161,7 +161,7 @@ int est_dans_dico(char *sequence, int N, dictionnaire dico){
 	return 1;	
 }
 
-
+/*
 int main(){
 	/*int i=7;
 	char *tab=malloc(sizeof(char)*i);
@@ -181,7 +181,7 @@ int main(){
 	int j=0;
 	for(j=0; j<7;j++){
 		printf("%c \n", tab[j]);
-	}*/
+	}
 	dictionnaire dico=malloc(sizeof(dictionnaire));
 	init_dico(dico);
 	ajout_dico("AN",2,dico,58);
@@ -190,5 +190,5 @@ int main(){
 	afficher(dico);
 	return 0;
 }
-
+*/
 

@@ -5,7 +5,7 @@
 
 
 //Ouvrir/Fermer fichier
-FILE* fichier = NULL;
+FILE* fichier = NULL;	//A mettre dans openFile
 
 FILE* openFile (char* name)
 {
@@ -40,19 +40,23 @@ int closeFile (FILE* fichier)
 
 int readChar (FILE* fichier) //On lit un octet (8bit) que l'on convertit en décimal
 {
-	int caractere;
 	int i,decimal=0;
 
-	caractere = fgetc(fichier);
-	if (caractere == EOF){	//Dans le cas ou on est à EOF,nus retournons 256
+	decimal = fgetc(fichier);
+	if (decimal == EOF){	//Dans le cas ou on est à EOF,nous retournons 256
 		return 256;
 	}
-
-	return caractere;
+	return decimal;
 }
 
 
+void ecriture_sortie_en_bit(uint32_t bits_a_ecrire)//On écrit 8 bits par 8 bits dans le fichier de sortie
+{
+	
+	//printf("%d ",code_du_dico);
 
+
+}
 
 
 

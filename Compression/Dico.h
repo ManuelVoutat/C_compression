@@ -7,7 +7,7 @@
 typedef int valeur_t;
 
 /*valeur du caractere en ASCII*/
-typedef int caractere_t;
+typedef int ASCII_t;
 
 /*structure du dictionnaire
 frere : caractere a coté d'un autre caractere
@@ -16,7 +16,7 @@ fils : suite de la chaine de caractere du frere
 typedef struct _noeud noeud;
 struct _noeud {
 	valeur_t valeur;
-	caractere_t caractere;
+	ASCII_t ASCII;
 	struct _noeud *frere;
 	struct _noeud *fils;
 };

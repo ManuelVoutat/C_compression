@@ -1,18 +1,24 @@
-#define taille_tab 200
+#define Taille_tab 200
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 
-int tableau_temporaire[200]; //AMELIORATION POSSIBLE : Utiliser une succéssion de pointeur afin d'optimiser la place.
 
-void initialise_tab_temp();
 
-void insere_dans_tab_temp(int caractere);
+void initialise_tab_temp(int* tableau_temporaire);
 
-char* concatene_caracteres_de_tab_temp(); /* permet de concatener les caractères dans le tableau temporaire: exemple: 
+uint32_t int_to_uint32(int n);
+
+void insere_dans_tab_temp(int caractere, int* tableau_temporaire);
+
+char* concatene_caracteres_de_tab_temp(int tableau_temporaire[], int* taille); /* permet de concatener les caractères dans le tableau temporaire: exemple: 
 							|a|b|c|  -> "abc"   */
 
-void ecriture_sortie(int code_du_dico,FILE* fichier_a_compresser);
+int exclusion_du_dernier_element(int* tableau_temporaire);
 
-void restart(); //Restart() permet de vider le tableau temporaire et de mettre en première position le dernier élement précedent.
+int restart(int* tableau_temporaire, int caractere_save); //Restart() permet de vider le tableau temporaire et de mettre en première position le dernier élement précedent. Et on renvoie l'indice de cet élément.
 
+void tampon_ecriture(uint32_t bit_a_ecrire, int taille_code);
 
+void Compression(FILE* fichier_in); //On compresse le fichier (transparent pour utilisateur)

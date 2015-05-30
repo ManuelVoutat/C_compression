@@ -1,14 +1,15 @@
-#include "Entree_Sortie.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "Compression.h"
+#include "Dico.h"
+#include "Entree_Sortie.h"
 
-int main (int argc, char *argv[]){ // argc permet de connaitre le nombre d'argument apporté après ./main. Si argc=1 alors il n'y a pas d'argument
+int main (int argc, char *argv[])
+{
 	FILE* fichier_a_compresser = openFile(argv[1]);
-
-	
-	ecriture_sortie(0, fichier_a_compresser);
+ 	Compression(fichier_a_compresser);
 	
 	int close = closeFile(fichier_a_compresser);
-
-	
-	
+	return 0;
 }

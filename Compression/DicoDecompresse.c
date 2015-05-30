@@ -7,55 +7,69 @@ char int_to_char(int n){return n;}
 
 int char_to_int(char c){return c;}
 
-void init_dicodecompress (char * tab){
+void init_dicodecompress (char ** tab, int taille){
 	int i;
-	for(i=0;i<N;i++){
+	printf("ok");
+	for(i=0;i<taille;i++){
 		if(i<255){
-			tab[i] = int_to_char(i);
+			//printf("%s\n",tab[i]);
+			*tab[i] = int_to_char(i);
 		}else{
-			tab[i] = ' ';
+			//printf("%s\n",tab[i]);
+			*tab[i] = ' ';
 		}
 	}
 }
 
-void affichage_dicodecompress(char * tab){
+void affichage_dicodecompress(char * tab[], int taille){
 	int i;
-	for (i = 0; i<N; i++){
-		printf("%d ",i);
-		printf("%c;", tab[i]);
+	for (i = 0; i<taille; i++){
+		if((i != 32) && (*tab[i] != ' ')){
+			printf("%d ",i);
+			printf("%s;", tab[i]);
+		}
 	}
 }
 
-void ajout_dicodecompress(){
-
-
-
+void ajout_dicodecompress(char * tab[], int taille, char * seq){
+	int i=260;
+	while(*tab[i] != ' '){
+		if(i<taille){
+			i++;
+		}
+		else{
+			printf("On realloue de la mémoire au tableau");
+		}
+	}
+	tab[i] = seq;
 }
 
 int main(){
-	char tab[N];
-	init_dicodecompress(tab);
-	affichage_dicodecompress(tab);
+	int taille = 500;
+	char ** tab = malloc(sizeof(char **));
+	init_dicodecompress(tab, taille);
+	//affichage_dicodecompress(tab, taille);
+	//ajout_dicodecompress(tab, taille, "seq");
 	return 0;
 }
 
-int est_dans_tab(char *tab[N], int N, char *val){
-	int trouve = 0;
+/*int est_dans_tab(char * tab, int taille, char * val){
 	int i = 0;
 	
 	if(strlen(val) > 2){
 		i = 255;
 	} 
 	
-	while(i<N){
-		if(tab[i] == val){
+	while(i<taille){
+		if(*tab[i] == val){
 			return 1;
 		}else{
 			i++;
 		}
 		return -1;
-	} 
-}
+	}
+	return 0;
+}*/
 
   
 /*
