@@ -10,6 +10,10 @@ void initialise_tab_temp(int* tableau_temporaire);
 
 uint32_t int_to_uint32(int n);
 
+int uint32_to_int(uint32_t n);
+
+uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_code, int taille_bit);
+
 void insere_dans_tab_temp(int caractere, int* tableau_temporaire);
 
 char* concatene_caracteres_de_tab_temp(int tableau_temporaire[], int* taille); /* permet de concatener les caractères dans le tableau temporaire: exemple: 
