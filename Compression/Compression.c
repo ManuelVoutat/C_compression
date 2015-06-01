@@ -21,7 +21,7 @@ int uint32_to_int(uint32_t n){
 	return n;
 }
 
-uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_code, int taille_bit){
+uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_code, int taille_bit, FILE* fichier_out){
 	uint32_t sequence_coupe = 0;
 	uint32_t sequence_a_add_temp = sequence_a_add;
 	//printf("%#X\n",sequence_a_add);
@@ -31,7 +31,7 @@ uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_cod
 		//printf("sequence_coupe : %#X\n",sequence_coupe);
 		_32b = _32b | sequence_coupe;
 		//printf("Voici le uint32_t que l'on code : %#X\n",_32b);
-		printf("%#X",_32b);
+		fprintf(fichier_out, "%x",_32b);
 		_32b = 0;
 		sequence_a_add = sequence_a_add << ((32-*nbr_bit_code)-taille_bit);
 		_32b = _32b | sequence_a_add;
@@ -48,7 +48,7 @@ uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_cod
 	
 	if(256 == uint32_to_int(sequence_a_add_temp)){
 	//printf("Voici le uint32_t que l'on code : %#X\n",_32b);
-	printf("%#X",_32b);
+	fprintf(fichier_out, "%x",_32b);
 	}
 	
 
@@ -98,15 +98,10 @@ int restart(int* tableau_temporaire, int caractere_save){	//On réinitialise le 
 	//tableau_temporaire[0] = caractere_save;
 }
 
-void tampon_ecriture(uint32_t bit_a_ecrire, int taille_code)
-{
-	printf("%#X\n",bit_a_ecrire);
-
-}
 
 
 
-void Compression(FILE* fichier_in){
+void Compression(FILE* fichier_in, FILE* fichier_out){
 
 
 	int caractere_a_compresser;
@@ -126,7 +121,7 @@ void Compression(FILE* fichier_in){
 	uint32_t _32b = 0;
 	int nbr_bit_code=0;
 	int taille_bit = 9;	
-
+	int augmente_taille = 511;
 	init_dico(dico);
 	initialise_tab_temp(tableau_temporaire);
 
@@ -157,17 +152,21 @@ void Compression(FILE* fichier_in){
 			bit_a_ecrire = int_to_uint32(code_caractere);
 			//printf("On code %d dans le fichier\n", code_caractere );
 
-			_32b = rempli_un_32b( bit_a_ecrire, _32b , &nbr_bit_code, taille_bit);
+			_32b = rempli_un_32b( bit_a_ecrire, _32b , &nbr_bit_code, taille_bit, fichier_out);
 			//printf("le unint_32 à coder : %#X\n",_32b);
 			
-			if(code_seq == 511){ // Ce if est utile lorsque l'on passe de 9 à 10 bits.
+			if(code_seq == augmente_taille){ // Ce if est utile lorsque l'on passe de 9 à 10 bits.
 
 				bit_a_ecrire = int_to_uint32(258);
 				//printf("On code %d dans le fichier\n", 258);
 				
-				_32b = rempli_un_32b( bit_a_ecrire, _32b, &nbr_bit_code, taille_bit);
+				_32b = rempli_un_32b( bit_a_ecrire, _32b, &nbr_bit_code, taille_bit, fichier_out);
 				//printf("le unint_32 à coder: %#X\n",_32b);
-				taille_bit = 10;
+				taille_bit = ++;
+				augmente_taille++;
+				augmente_taille = augmente_taille*2;
+				augmente_taille--;
+
 			}
 			restart(tableau_temporaire, caractere_save);
 			caractere_a_compresser = caractere_save;
@@ -182,7 +181,7 @@ void Compression(FILE* fichier_in){
 				code_caractere = caract_to_code (sequence, taille_sequence, dico); //recherche code caractere dans dico
 				bit_a_ecrire = int_to_uint32(code_caractere);
 				//printf("On code %d dans le fichier\n", code_caractere );
-				_32b = rempli_un_32b( bit_a_ecrire, _32b , &nbr_bit_code, taille_bit);
+				_32b = rempli_un_32b( bit_a_ecrire, _32b , &nbr_bit_code, taille_bit, fichier_out);
 				//printf("le unint_32 à coder : %#X\n",_32b);
 
 			}
@@ -190,7 +189,7 @@ void Compression(FILE* fichier_in){
 	}
 	bit_a_ecrire = int_to_uint32(caractere_a_compresser);
 	//printf("On code %d dans le fichier\n", caractere_a_compresser );
-	_32b = rempli_un_32b( bit_a_ecrire, _32b , &nbr_bit_code, taille_bit);
+	_32b = rempli_un_32b( bit_a_ecrire, _32b , &nbr_bit_code, taille_bit, fichier_out);
 	//printf("le unint_32 à coder : %#X\n",_32b);
 
 

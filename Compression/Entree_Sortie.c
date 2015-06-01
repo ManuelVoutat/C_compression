@@ -7,10 +7,10 @@
 //Ouvrir/Fermer fichier
 FILE* fichier = NULL;	//A mettre dans openFile
 
-FILE* openFile (char* name)
+FILE* openFile (char* name, char* lecture_ecriture)
 {
 	
-	fichier = fopen (name, "rb"); // "rb" correspond à "read binary"
+	fichier = fopen (name, lecture_ecriture); // "rb" correspond à "read binary"
 
 	if(NULL == fichier) //On part sur un fichier binaire
 	{

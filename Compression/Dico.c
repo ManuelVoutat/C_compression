@@ -163,7 +163,7 @@ int est_dans_dico(char *sequence, int N, dictionnaire dico){
 
 /*
 int main(){
-	/*int i=7;
+	//int i=7;
 	char *tab=malloc(sizeof(char)*i);
 	printf("%d\n",(int)sizeof(char) );
 	//char *str= malloc(20);

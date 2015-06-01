@@ -12,7 +12,7 @@ uint32_t int_to_uint32(int n);
 
 int uint32_to_int(uint32_t n);
 
-uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_code, int taille_bit);
+uint32_t rempli_un_32b(uint32_t sequence_a_add, uint32_t _32b, int * nbr_bit_code, int taille_bit, FILE* fichier_out);
 
 void insere_dans_tab_temp(int caractere, int* tableau_temporaire);
 
@@ -23,6 +23,6 @@ int exclusion_du_dernier_element(int* tableau_temporaire);
 
 int restart(int* tableau_temporaire, int caractere_save); //Restart() permet de vider le tableau temporaire et de mettre en première position le dernier élement précedent. Et on renvoie l'indice de cet élément.
 
-void tampon_ecriture(uint32_t bit_a_ecrire, int taille_code);
 
-void Compression(FILE* fichier_in); //On compresse le fichier (transparent pour utilisateur)
+
+void Compression(FILE* fichier_in, FILE* fichier_out); //On compresse le fichier (transparent pour utilisateur)

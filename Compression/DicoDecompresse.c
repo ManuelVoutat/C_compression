@@ -5,18 +5,22 @@
 
 char int_to_char(int n){return n;}
 
+char* int_to_string(int n){
+	char *tab = (char*) malloc(sizeof(char));
+	tab[0]=int_to_char(n);
+	return tab;
+}
+
 int char_to_int(char c){return c;}
 
-void init_dicodecompress (char ** tab, int taille){
+void init_dicodecompress (char * tab[], int taille){
 	int i;
-	printf("ok");
+	printf("Init");
 	for(i=0;i<taille;i++){
 		if(i<255){
-			//printf("%s\n",tab[i]);
-			*tab[i] = int_to_char(i);
+			tab[i] = int_to_string(i);
 		}else{
-			//printf("%s\n",tab[i]);
-			*tab[i] = ' ';
+			tab[i] = " ";
 		}
 	}
 }
@@ -24,16 +28,19 @@ void init_dicodecompress (char ** tab, int taille){
 void affichage_dicodecompress(char * tab[], int taille){
 	int i;
 	for (i = 0; i<taille; i++){
-		if((i != 32) && (*tab[i] != ' ')){
-			printf("%d ",i);
-			printf("%s;", tab[i]);
+		if(strcmp(tab[i]," ")){
+			printf("%d %s;", i, tab[i]);
 		}
 	}
 }
 
+int est_dans_dico(char * tab[], int taille, char * seq){
+	if(tab[
+}
+
 void ajout_dicodecompress(char * tab[], int taille, char * seq){
 	int i=260;
-	while(*tab[i] != ' '){
+	while(strcmp(tab[i]," ")){
 		if(i<taille){
 			i++;
 		}
@@ -42,14 +49,19 @@ void ajout_dicodecompress(char * tab[], int taille, char * seq){
 		}
 	}
 	tab[i] = seq;
+	printf("string : %s\n",tab[i]);
+	printf("carac : %c\n",*tab[i]);
 }
 
 int main(){
 	int taille = 500;
-	char ** tab = malloc(sizeof(char **));
+	char * tab[500];
 	init_dicodecompress(tab, taille);
 	//affichage_dicodecompress(tab, taille);
-	//ajout_dicodecompress(tab, taille, "seq");
+	ajout_dicodecompress(tab, taille, " Jesuis");
+	//affichage_dicodecompress(tab, taille);
+	ajout_dicodecompress(tab, taille, " un prout");
+	affichage_dicodecompress(tab, taille);
 	return 0;
 }
 
